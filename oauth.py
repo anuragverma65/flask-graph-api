@@ -1,5 +1,8 @@
 from rauth import OAuth1Service, OAuth2Service
 from flask import current_app, url_for, request, redirect, session
+import json
+import urllib2
+from pprint import pprint
 
 
 class OAuthSignIn(object):
@@ -42,29 +45,51 @@ class FacebookSignIn(OAuthSignIn):
             access_token_url='https://graph.facebook.com/oauth/access_token',
             base_url='https://graph.facebook.com/'
         )
+        print "test"
+        print pprint (vars(self.service))
 
     def authorize(self):
         return redirect(self.service.get_authorize_url(
-            scope='email',
+            scope='manage_pages',
             response_type='code',
             redirect_uri=self.get_callback_url())
         )
-
     def callback(self):
+        print "Request"
+        print request
+        # a = urllib2.urlopen("https://graph.facebook.com/v2.8/oauth/access_token?client_id=201049237061460&redirect_uri=http://localhost:5000/callback/facebook&client_secret=b0628ba953c46beba8b8dc9473d7d4c0&code={0}".format(request.args["code"])).read()
+        # print "*"*100
+        # print a
         if 'code' not in request.args:
             return None, None, None
         oauth_session = self.service.get_auth_session(
             data={'code': request.args['code'],
                   'grant_type': 'authorization_code',
-                  'redirect_uri': self.get_callback_url()}
+                  'redirect_uri': self.get_callback_url()}, decoder=json.loads
         )
+
+        # a =  request.args['code']
+        # b = urllib2.urlopen("https://graph.facebook.com/v2.8oauth/access_token?client_id=201049237061460&redirect_uri=http://localhost:5000/callback/facebook&client_secret=b0628ba953c46beba8b8dc9473d7d4c0&code={a}").read()
+        # print b
+        # print '*'*100
+        # print self.get_callback_url()
+        # print a
+        # print request.args['code']
+        # a = urllib2.urlopen("https://graph.facebook.com/v2.8/oauth/access_token?client_id=201049237061460&redirect_uri=http://localhost:5000/callback/facebook&client_secret=b0628ba953c46beba8b8dc9473d7d4c0&code={0}".format(request.args['code'])).read()
+        # print a
+
+        pprint (vars(oauth_session))
+        print "access"
+        print oauth_session.access_token
         me = oauth_session.get('me?fields=id,email').json()
+        # print me
         return (
-            'facebook$' + me['id'],
+            me['id'],
             me.get('email').split('@')[0],  # Facebook does not provide
-                                            # username, so the email's user
+                                           # username, so the email's user
                                             # is used instead
-            me.get('email')
+            me.get('email'),
+            oauth_session.access_token
         )
 
 

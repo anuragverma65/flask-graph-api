@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from oauth import OAuthSignIn
+import facebook as fb
+import urllib2
+import json
+from pprint import pprint
 
 
 app = Flask(__name__)
@@ -10,8 +14,8 @@ app.config['SECRET_KEY'] = 'top secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['OAUTH_CREDENTIALS'] = {
     'facebook': {
-        'id': '470154729788964',
-        'secret': '010cc08bd4f51e34f3f3e684fbdea8a7'
+        'id': '201049237061460',
+        'secret': 'b0628ba953c46beba8b8dc9473d7d4c0'
     },
     'twitter': {
         'id': '3RzWQclolxWZIMq5LJqzRZPTl',
@@ -41,6 +45,17 @@ def load_user(id):
 def index():
     return render_template('index.html')
 
+@app.route('/listings')
+def listings():
+    print "listings"
+    print access
+    url = "https://graph.facebook.com/v2.8/me/accounts?access_token={0}".format(access)
+    print url
+    a = urllib2.urlopen("https://graph.facebook.com/v2.8/me/accounts?access_token=EAAC22mxbf1QBADounJZBd9bUZAkb65PJMW6dbFZA9lZAIuA26jeDEtq7uX33heJ17rQZBGFaMHGvalClZBw2BT2GxWVvInUK9hJOy8ZA9FKjWDL5vZCNgtZBM9uAnNTiN8hv8sE1aYf9BYC92HTSq8TXtzwHjms6c3ZCMZD").read()
+    a = json.loads(a)
+    print a
+    return render_template('listings.html', a=a)
+
 
 @app.route('/logout')
 def logout():
@@ -61,7 +76,13 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
-    social_id, username, email = oauth.callback()
+    pprint (vars(oauth))
+    social_id, username, email, access_token = oauth.callback()
+    global access
+    access =  access_token
+    print access
+    print "yooooo"
+
     if social_id is None:
         flash('Authentication failed.')
         return redirect(url_for('index'))

@@ -1,0 +1,49 @@
+hello, you have following fb pages
+
+
+{% for value in a["data"] %}
+
+	<table style="border:1px solid">
+	<th>Page Name</th>
+	<th>Category</th>
+	<tr>
+    <td>{{ value['name'] }}</td> 
+    <td>{{ value['category'] }}</td>
+    <td><button>Update Info</button></td>
+    </tr>
+    </table>
+{% endfor %}
+
+<!-- <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '201049237061460',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+     FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+
+	  	console.log(response)
+	  	var accessToken = response.authResponse.accessToken;
+	    console.log('Logged in.');
+	    console.log(accessToken);
+	  }
+	  else {
+	    FB.login();
+	  }
+});
+  };
+
+  (function(d, s, id){
+  	console.log(222)
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+</script> -->
+
