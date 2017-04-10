@@ -1,49 +1,98 @@
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 hello, you have following fb pages
 
 
 {% for value in a["data"] %}
-
-	<table style="border:1px solid">
-	<th>Page Name</th>
+	<table class="table table-striped" style="border:1px solid">
+	<th>Pagejhghfhg Name</th>
 	<th>Category</th>
+	<th></th>
 	<tr>
     <td>{{ value['name'] }}</td> 
     <td>{{ value['category'] }}</td>
-    <td><button>Update Info</button></td>
+    <td><button type="button" id="page-modal" data-id="{{value['id']}}" data-token="{{value['access_token']}}" class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal">Open Modal</button></td>
     </tr>
     </table>
 {% endfor %}
 
-<!-- <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '201049237061460',
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();
-     FB.getLoginStatus(function(response) {
-	  if (response.status === 'connected') {
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-	  	console.log(response)
-	  	var accessToken = response.authResponse.accessToken;
-	    console.log('Logged in.');
-	    console.log(accessToken);
-	  }
-	  else {
-	    FB.login();
-	  }
-});
-  };
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">View/Edit Page Details</h4>
+      </div>
+      <div class="modal-body">
+		<form id="page_form">
+		<input type="hidden" id="page_id">
+		<input type="hidden" id="page_token">
+		  <div class="form-group">
+		    <label for="about">About:</label>
+		    <input type="text" class="form-control" id="about">
+		  </div>
+		  <div class="form-group">
+		    <label for="mission">Mission:</label>
+		    <input type="text" class="form-control" id="mission">
+		  </div>
+		  <div class="form-group">
+		    <label for="phone">Contact No:</label>
+		    <input type="text" class="form-control" id="phone">
+		  </div>		  
+		  <button type="submit" id="page_submit" class="btn btn-default">Submit</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+       <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
 
-  (function(d, s, id){
-  	console.log(222)
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+  </div>
+</div>
+<script>
+	$(document).on('ready', function(){
+		$('#page-modal').on('click', function(event){
+			var page_id = $(this).data('id');
+			var page_token = $(this).data('token');
+			$.ajax({
+		        type: "GET",
+		        url: "https://graph.facebook.com/v2.8/"+page_id+"?fields=start_info%2Cmission%2Cabout&access_token="+page_token,
+		    	success: function(data) {
+		    		console.log(data)
+		    		$('#about').val(data['about'])
+		    		$('#mission').val(data['mission'])
+		    		$('#phone').val(data['phone'])
+		    		$('#page_id').val(data['id'])
+		    		$('#page_token').val(page_token)
+		    	}
+		    });
+		});
+		$('#page_submit').on('click', function(){
+			var page_id = $('#page_id').val()
+		    var page_token = $('#page_token').val()
+			var about = $('#about').val()
+			var mission = $('#mission').val()
+			var phone = $('#phone').val()
+			$.ajax({
+		        type: "POST",
+		        beforeSend: function(request) {
+    				request.setRequestHeader("access_token", page_token);
+  				},
+		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token},
 
-</script> -->
+		        url: "https://graph.facebook.com/v2.8/"+page_id,
+		    	success: function(data) {
+
+		    	}
+		    });			
+		})
+	});
+</script>
+
+
 

@@ -7,6 +7,7 @@ import facebook as fb
 import urllib2
 import json
 from pprint import pprint
+from flask_bootstrap import Bootstrap
 
 
 app = Flask(__name__)
