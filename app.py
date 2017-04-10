@@ -81,7 +81,6 @@ def oauth_callback(provider):
     global access
     access =  access_token
     print access
-    print "yooooo"
 
     if social_id is None:
         flash('Authentication failed.')
