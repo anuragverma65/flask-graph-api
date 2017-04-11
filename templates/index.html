@@ -1,9 +1,9 @@
 <html>
-    <head>
+   <!--  <head>
         <title>UpPage - Update fb pages</title>
-    </head>
-    <body>
-        <h1>Hello</h1>
+    </head> -->
+<!--     <body>
+        <h1>Welcome to UpPage</h1>
         {% for message in get_flashed_messages() %}
             <p><b>Error</b>: {{ message }}</p>
         {% endfor %}
@@ -16,5 +16,85 @@
             <p><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a></p>
             <p><a href="{{ url_for('oauth_authorize', provider='twitter') }}">Login with Twitter</a></p>
         {% endif %}
-    </body>
+    </body> -->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>UpPage</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="jumbotron.css" rel="stylesheet"> -->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+<!--       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+      <a class="navbar-brand" href="#">UpPage - Manage your social presence</a>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <a style="float:right;" class="navbar-brand"  href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </nav>
+    {% if current_user.is_authenticated %}
+        <div class="jumbotron">
+          <div class="container">
+            <h2>Hi, {{ current_user.nickname }}!</h2>
+            <p>Welcome back!</p>
+            <p>Click <a href="/listings">here</a> to go the listings page</p>
+          </div>
+        </div>
+    {% else %}    
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+          <div class="container">
+            <h1 class="display-3">Welome to UpPage!</h1>
+            <p>UpPage helps you to manage all your social pages from single app. You do not need to login to different platforms to manage your social content.</p>
+            <p>Lets get started</p>
+            <p><a href="{{ url_for('oauth_authorize', provider='facebook') }}"" role="button"><img src="https://www.carmellimo.com/design/main/images/facebook-btn.png" style="width: 200px"></a></p>
+          </div>
+        </div>
+    {% endif %}
+
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div> -->
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; UpPage 2017</p>
+      </footer>
+    </div> <!-- /container -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 </html>

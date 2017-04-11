@@ -1,23 +1,48 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+ 	      <a class="navbar-brand" href="/">UpPage - Manage your social presence</a>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      </div>
+ </nav>
+
+ 		<div class="jumbotron">
+          <div class="container">
+            <p>Hi there, You can check your social fingerprint here</p>
+			<table class="table table-hover" style="width: 70%">
+            {% for value in a["data"] %}
+				<th>Page Name</th>
+				<th>Category</th>
+				<th></th>
+				<tr>
+			    <td><img src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/facebook_circle_color-256.png" style="width: 20px; height: 20px"> {{ value['name'] }} </td> 
+			    <td>{{ value['category'] }}</td>
+			    <td><button type="button" id="page-modal" data-id="{{value['id']}}" data-token="{{value['access_token']}}" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal">View/Edit</button></td>
+			    </tr>
+			{% endfor %}
+				<tr>
+				
+					<td><img src="http://www.freeiconspng.com/uploads/allpixm--google-plus-logo-png-13.png" style="width: 20px; height: 20px"> Sportify</td>
+					<td>Sport</td>
+					<td><button type="button" class="btn btn-sm btn-success">View/Edit</button></td>
+				</tr>
+				<tr>
+				
+					<td><img src="http://seeklogo.com/images/L/linkedin-icon-logo-05B2880899-seeklogo.com.gif" style="width: 20px; height: 20px"> Healthify</td>
+					<td>Healthcare</td>
+					<td><button type="button" class="btn btn-sm btn-success">View/Edit</button></td>
+				</tr>				
+			</table>
+          </div>
+          
+        </div>
 
 
-hello, you have following fb pages
 
 
-{% for value in a["data"] %}
-	<table class="table table-striped" style="border:1px solid">
-	<th>Pagejhghfhg Name</th>
-	<th>Category</th>
-	<th></th>
-	<tr>
-    <td>{{ value['name'] }}</td> 
-    <td>{{ value['category'] }}</td>
-    <td><button type="button" id="page-modal" data-id="{{value['id']}}" data-token="{{value['access_token']}}" class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal">Open Modal</button></td>
-    </tr>
-    </table>
-{% endfor %}
+
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -61,7 +86,7 @@ hello, you have following fb pages
 			var page_token = $(this).data('token');
 			$.ajax({
 		        type: "GET",
-		        url: "https://graph.facebook.com/v2.8/"+page_id+"?fields=start_info%2Cmission%2Cabout&access_token="+page_token,
+		        url: "https://graph.facebook.com/v2.8/"+page_id+"?fields=phone%2Cmission%2Cabout&access_token="+page_token,
 		    	success: function(data) {
 		    		console.log(data)
 		    		$('#about').val(data['about'])
