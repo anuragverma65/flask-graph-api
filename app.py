@@ -13,7 +13,7 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['OAUTH_CREDENTIALS'] = {
     'facebook': {
         'id': '201049237061460',
