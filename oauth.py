@@ -50,7 +50,7 @@ class FacebookSignIn(OAuthSignIn):
 
     def authorize(self):
         return redirect(self.service.get_authorize_url(
-            scope='manage_pages',
+            scope='email, manage_pages',
             response_type='code',
             redirect_uri=self.get_callback_url())
         )
