@@ -53,7 +53,7 @@ def listings():
     print access
     url = "https://graph.facebook.com/v2.8/me/accounts?access_token={0}".format(access)
     print url
-    a = urllib2.urlopen("https://graph.facebook.com/v2.8/me/accounts?access_token=EAAC22mxbf1QBADounJZBd9bUZAkb65PJMW6dbFZA9lZAIuA26jeDEtq7uX33heJ17rQZBGFaMHGvalClZBw2BT2GxWVvInUK9hJOy8ZA9FKjWDL5vZCNgtZBM9uAnNTiN8hv8sE1aYf9BYC92HTSq8TXtzwHjms6c3ZCMZD").read()
+    a = urllib2.urlopen(url).read()
     a = json.loads(a)
     print a
     return render_template('listings.html', a=a)
