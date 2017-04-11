@@ -12,10 +12,10 @@
           <div class="container">
             <p>Hi there, You can check your social fingerprint here</p>
 			<table class="table table-hover" style="width: 70%">
+			<th>Page Name</th>
+			<th>Category</th>
+			<th></th>
             {% for value in a["data"] %}
-				<th>Page Name</th>
-				<th>Category</th>
-				<th></th>
 				<tr>
 			    <td><img src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/facebook_circle_color-256.png" style="width: 20px; height: 20px"> {{ value['name'] }} </td> 
 			    <td>{{ value['category'] }}</td>
