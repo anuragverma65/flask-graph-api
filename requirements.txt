@@ -9,6 +9,7 @@ itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
 packaging==16.8
+psycopg2==2.7.1
 pyparsing==2.2.0
 rauth==0.7.0
 requests==2.4.3
