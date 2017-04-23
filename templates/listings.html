@@ -119,10 +119,10 @@
 		    		$('#page_id').val(data['id'])
 		    		$('#website').val(data['website'])
 		    		$('#name').val(data['name'])
-		    		$('#address').val(data['location'][5])
-		    		$('#city').val(data['location'][0])
-		    		$('#state').val(data['location'][4])
-		    		$('#country').val(data['location'][1])
+		    		$('#address').val(data['location']['street'])
+		    		$('#city').val(data['location']['city'])
+		    		$('#state').val(data['location']['state'])
+		    		$('#country').val(data['location'][country])
 		    		$('#page_token').val(page_token)
 		    	}
 		    });
