@@ -132,12 +132,16 @@
 			var city = $('#city').val()
 			var state = $('#state').val()
 			var country = $('#country').val()
+			console.log(address)
+			console.log(city)
+			console.log(state)
+			console.log(country)
 			$.ajax({
 		        type: "POST",
 		        beforeSend: function(request) {
     				request.setRequestHeader("access_token", page_token);
   				},
-		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token, "website": website, location: {"street": address, "city": city, "state": state, "country": country}},
+		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token, "website": website, location: {"street": address, "city": city, "state": state, "country": country} },
 		        url: "https://graph.facebook.com/v2.8/"+page_id,
 		    	success: function(data) {
 		    		console.log(data)
