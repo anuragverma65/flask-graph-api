@@ -82,9 +82,13 @@ class FacebookSignIn(OAuthSignIn):
         print "access"
         print oauth_session.access_token
         me = oauth_session.get('me?fields=id,email').json()
-        # print me
+        print me
+        try:
+            u_id = me['id']
+        except keyError:
+            u_id = ""
         return (
-            me['id'],
+            u_id,
             me.get('email').split('@')[0],  # Facebook does not provide
                                            # username, so the email's user
                                             # is used instead
