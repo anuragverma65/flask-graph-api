@@ -58,8 +58,16 @@
 		<input type="hidden" id="page_id">
 		<input type="hidden" id="page_token">
 		  <div class="form-group">
+		    <label for="name">Name:</label>
+		    <input type="text" class="form-control" id="name">
+		  </div>
+		  <div class="form-group">
 		    <label for="about">About:</label>
 		    <input type="text" class="form-control" id="about">
+		  </div>
+		  <div class="form-group">
+		    <label for="website">Website:</label>
+		    <input type="text" class="form-control" id="website">
 		  </div>
 		  <div class="form-group">
 		    <label for="mission">Mission:</label>
@@ -68,7 +76,23 @@
 		  <div class="form-group">
 		    <label for="phone">Contact No:</label>
 		    <input type="text" class="form-control" id="phone">
-		  </div>		  
+		  </div>
+		  <div class="form-group">
+		    <label for="address">Address:</label>
+		    <input type="text" class="form-control" id="address" required="true">
+		  </div>
+		  <div class="form-group">
+		    <label for="city">City:</label>
+		    <input type="text" class="form-control" id="city" required="true">
+		  </div>
+		  <div class="form-group">
+		    <label for="state">State:</label>
+		    <input type="text" class="form-control" id="state" required="true">
+		  </div>
+		  <div class="form-group">
+		    <label for="country">Country:</label>
+		    <input type="text" class="form-control" id="country" required="true">
+		  </div>	  
 		  <button type="submit" id="page_submit" class="btn btn-default">Submit</button>
 		</form>
       </div>
@@ -86,13 +110,19 @@
 			var page_token = $(this).data('token');
 			$.ajax({
 		        type: "GET",
-		        url: "https://graph.facebook.com/v2.8/"+page_id+"?fields=phone%2Cmission%2Cabout&access_token="+page_token,
+		        url: "https://graph.facebook.com/v2.8/"+page_id+"?fields=phone%2Cwebsite%2Cname%2Clocation%2Cmission%2Cabout&access_token="+page_token,
 		    	success: function(data) {
 		    		console.log(data)
 		    		$('#about').val(data['about'])
 		    		$('#mission').val(data['mission'])
 		    		$('#phone').val(data['phone'])
 		    		$('#page_id').val(data['id'])
+		    		$('#website').val(data['website'])
+		    		$('#name').val(data['name'])
+		    		$('#address').val(data['location'][5])
+		    		$('#city').val(data['location'][0])
+		    		$('#state').val(data['location'][4])
+		    		$('#country').val(data['location'][1])
 		    		$('#page_token').val(page_token)
 		    	}
 		    });
@@ -103,12 +133,16 @@
 			var about = $('#about').val()
 			var mission = $('#mission').val()
 			var phone = $('#phone').val()
+			var address = $('#address').val()
+			var city = $('#city').val()
+			var state = $('#state').val()
+			var country = $('#country').val()
 			$.ajax({
 		        type: "POST",
 		        beforeSend: function(request) {
     				request.setRequestHeader("access_token", page_token);
   				},
-		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token},
+		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token, "website": website, "name":name, location: {"street": address, "city": city, "state": state, "country": country}},
 
 		        url: "https://graph.facebook.com/v2.8/"+page_id,
 		    	success: function(data) {
