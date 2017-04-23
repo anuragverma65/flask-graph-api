@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from oauth import OAuthSignIn
-import facebook as fb
+# import facebook as fb
 import urllib2
 import json
 from pprint import pprint
