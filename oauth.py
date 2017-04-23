@@ -85,7 +85,7 @@ class FacebookSignIn(OAuthSignIn):
         print me
         try:
             u_id = me['id']
-        except keyError:
+        except KeyError:
             u_id = ""
         return (
             u_id,
