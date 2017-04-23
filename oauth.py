@@ -76,7 +76,7 @@ class FacebookSignIn(OAuthSignIn):
         # print a
         # print request.args['code']
         # a = urllib2.urlopen("https://graph.facebook.com/v2.8/oauth/access_token?client_id=201049237061460&redirect_uri=http://localhost:5000/callback/facebook&client_secret=b0628ba953c46beba8b8dc9473d7d4c0&code={0}".format(request.args['code'])).read()
-        # print a
+        print "hello"
 
         pprint (vars(oauth_session))
         print "access"
