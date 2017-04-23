@@ -141,7 +141,7 @@
 		        beforeSend: function(request) {
     				request.setRequestHeader("access_token", page_token);
   				},
-		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token, "website": website},
+		        data: {"about": about, "mission": mission, "phone": phone, "access_token": page_token, "website": website, location: {"street": address, "city": city, "state": state, "country": country} },
 		        url: "https://graph.facebook.com/v2.8/"+page_id,
 		    	success: function(data) {
 		    		console.log(data)
